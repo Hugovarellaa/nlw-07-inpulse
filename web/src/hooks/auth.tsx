@@ -11,6 +11,7 @@ type User = {
 type AuthContextData = {
   user: User | null;
   signInUrl: string;
+  signOut: () => void;
 };
 
 interface ContextProps {
@@ -42,6 +43,20 @@ export function AuthProvider({ children }: ContextProps) {
     localStorage.setItem("@dowhile:token", token);
     setUser(user);
   }
+  function signOut() {
+    setUser(null);
+    localStorage.removeItem("@dowhile:token");
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem("@dowhile:token");
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+    if (token) {
+      api.get<User>("profile").then((response) => {
+        setUser(response.data);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const url = window.location.href;
@@ -56,7 +71,7 @@ export function AuthProvider({ children }: ContextProps) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ signInUrl, user }}>
+    <AuthContext.Provider value={{ signInUrl, user, signOut }}>
       {children}
     </AuthContext.Provider>
   );
