@@ -1,8 +1,8 @@
 <h1 align="center">NLW Heat - Node.js</h1>
 
 <p align="center">
-  <img src="./web/src/assets/pg1.png" width="400px">
-  <img src="./web/src/assets/pg2.png" width="423px">
+  <img src="./web/src/assets/pg1.png" width="350px">
+  <img src="./web/src/assets/pg2.png" width="373px">
 </p>
 
 <p align="center">
